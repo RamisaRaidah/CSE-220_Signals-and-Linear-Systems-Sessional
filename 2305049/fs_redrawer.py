@@ -40,14 +40,6 @@ class FourierEpicycles:
         self.N=n_harmonics
         self.T=t[-1]
 
-        # for i in range(1,len(t)):
-        #     flag=True
-        #     for j in range(len(t)):
-        #         if(i+j>=len(t)): break
-        #         if(signal[j]!=signal[i+j]):
-        #             flag=False
-        #             break
-        #     if(flag): self.T=t[i]
 
         self.omega=(2*np.pi)/self.T
         self.coeffs={}
@@ -63,7 +55,7 @@ class FourierEpicycles:
 
         n may be zero, positive, or negative.
         """
-        return (1/self.T)*np.trapezoid(self.signal*np.exp((n*self.omega*self.t*1j)), self.t)
+        return (1/self.T)*np.trapezoid(self.signal*np.exp(-1*(n*self.omega*self.t*1j)), self.t)
 
     def calculate_all_coefficients(self):
         """
@@ -94,12 +86,14 @@ class FourierEpicycles:
                 x+=(cn[i]*np.exp(i*self.omega*t*1j))
             return x
         else:
-            y=np.array([])
+            idx=0
+            y=np.zeros(len(t), dtype=complex)
             for k in t:
                 x=0+0j
                 for i in range(-self.N,self.N+1):
                     x+=(cn[i]*np.exp(i*self.omega*k*1j))
-                y=np.append(y,x)
+                y[idx]=x
+                idx+=1
             return y
         
 

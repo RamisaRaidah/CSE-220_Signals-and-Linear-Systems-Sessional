@@ -165,17 +165,17 @@ class InverseCFT2D:
 
         
 
-        a=np.outer(self.x,self.u) #x,u
-        b=np.outer(self.y,self.v) #y,v
+        a=np.outer(self.x,self.u) 
+        b=np.outer(self.y,self.v) 
 
         sin_a=np.sin(2*np.pi*a)
         cos_a=np.cos(2*np.pi*a)
         sin_b=np.sin(2*np.pi*b)
         cos_b=np.cos(2*np.pi*b)
 
-        Frsin_b=np.trapezoid(self.real[None,:,:]*sin_b[:,:,None],self.v,axis=1) #y,u
+        Frsin_b=np.trapezoid(self.real[None,:,:]*sin_b[:,:,None],self.v,axis=1) 
         Fisin_b=np.trapezoid(self.imag[None,:,:]*sin_b[:,:,None],self.v,axis=1)
-        Frcos_b=np.trapezoid(self.real[None,:,:]*cos_b[:,:,None],self.v,axis=1) #y,u
+        Frcos_b=np.trapezoid(self.real[None,:,:]*cos_b[:,:,None],self.v,axis=1)
         Ficos_b=np.trapezoid(self.imag[None,:,:]*cos_b[:,:,None],self.v,axis=1)
 
         p=Frcos_b-Fisin_b
