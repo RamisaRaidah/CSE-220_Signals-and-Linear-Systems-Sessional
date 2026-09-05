@@ -1,0 +1,21 @@
+Task A:
+py bigmul.py inputs/1.txt --engine fft --out-dir outputs/task_a/fft/1
+py bigmul.py inputs/2.txt --engine fft --out-dir outputs/task_a/fft/2
+py bigmul.py inputs/3.txt --engine fft --out-dir outputs/task_a/fft/3
+py bigmul.py inputs/4.txt --engine fft --out-dir outputs/task_a/fft/4
+
+py bigmul.py inputs/1.txt --engine dft --out-dir outputs/task_a/dft/1
+py bigmul.py inputs/2.txt --engine dft --out-dir outputs/task_a/dft/2
+py bigmul.py inputs/3.txt --engine dft --out-dir outputs/task_a/dft/3
+
+
+py bigmul.py --benchmark --out-dir outputs/task_a/benchmark
+
+Task B:
+py image_conv.py images/skyline512.png --kernel bokeh --param 9 --engine fft --out-dir outputs/task_b/skyline_bokeh
+py image_conv.py images/sunset512.png --gray --kernel motion --param 41 --engine fft --out-dir outputs/task_b/sunset_motion
+py image_conv.py images/sunset512.png --gray --kernel gaussian --param 15 --engine fft --out-dir outputs/task_b/sunset_gaussian
+py image_conv.py images/nebula512.png --kernel gaussian --param 15 --engine fft --out-dir outputs/task_b/nebula_gaussian
+py image_conv.py images/skyline256.png --kernel box --param 11 --engine dft --out-dir outputs/task_b/skyline256_box_dft
+
+py image_conv.py images/skyline512.png --benchmark --out-dir outputs/task_b/benchmark

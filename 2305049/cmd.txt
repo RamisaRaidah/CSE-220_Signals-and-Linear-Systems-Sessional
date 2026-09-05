@@ -1,0 +1,18 @@
+Task A:
+py bigmul.py inputs/1.txt --engine fft --out-dir outputs/1
+py bigmul.py inputs/2.txt --engine fft --out-dir outputs/2
+py bigmul.py inputs/3.txt --engine fft --out-dir outputs/3
+py bigmul.py inputs/4.txt --engine fft --out-dir outputs/4
+
+py bigmul.py inputs/1.txt --engine dft --out-dir outputs/1
+py bigmul.py inputs/2.txt --engine dft --out-dir outputs/2
+py bigmul.py inputs/3.txt --engine dft --out-dir outputs/3
+py bigmul.py inputs/4.txt --engine dft --out-dir outputs/4
+
+py bigmul.py --benchmark --out-dir outputs/benchmark
+
+Task B:
+py image_conv.py images/skyline512.png --kernel bokeh --param 9 --engine fft --out-dir outputs/skyline_bokeh
+
+
+py image_conv.py images/skyline512.png --benchmark --out-dir outputs/benchmark

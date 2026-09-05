@@ -95,7 +95,57 @@ class FourierEpicycles:
                 y[idx]=x
                 idx+=1
             return y
+
+
+    def prune_harmonics_by_energy(self,r):
+        energy=0
+        self.calculate_all_coefficients()
+
+        arr = [(0, 0)] * len(self.coeffs)
+
+        idx=0
+        for i in range(-self.N,self.N+1):
+            energy+=(np.abs(self.coeffs[i])**2)
+            arr[idx]=(np.abs(self.coeffs[i]),i)
+            idx+=1
+
+
+        arr = sorted(arr, key=lambda p: p[0])
+        cnt=0
+        enn=0
+
+        l=len(arr)
+        idx=-self.N
+        idx2=l-1
+        for i in range(l):
+            enn+=((arr[idx2][0]))**2
+            
+            if((np.abs(enn)/np.abs(energy))>r):
+                self.coeffs[arr[idx2][1]]=0
+            else: cnt+=1
+
+            idx+=1
+            idx2-=1
         
+
+        en2=0
+        for i in range(-self.N,self.N+1):
+            en2+=((np.abs(self.coeffs[i])**2))
+
+        return cnt, (np.abs(en2)/np.abs(energy))
+
+    def evaluate_reconstruction_error(self):
+        f_hat=self.approximate(t)
+
+        mse=0+0j
+        for i in range(len(self.signal)):
+            mse+=(self.signal[i]-f_hat[i])**2
+
+        mse/=len(self.signal)
+        return mse
+
+
+
 
 if __name__ == "__main__":
     import sys
@@ -116,5 +166,20 @@ if __name__ == "__main__":
     t, z = load_svg_path(svg_path, num_points=1000)
     fs = FourierEpicycles(t, z, n_harmonics=N_HARMONICS)
     fs.calculate_all_coefficients()
+
+    cnt1,r1=fs.prune_harmonics_by_energy(0.96)
+    cnt2,r2=fs.prune_harmonics_by_energy(0.98)
+    cnt3,r3=fs.prune_harmonics_by_energy(0.99)
+    cnt4,r4=fs.prune_harmonics_by_energy(1)
+    cnt5,r5=fs.prune_harmonics_by_energy(0.4)
+
+    mse=fs.evaluate_reconstruction_error()
+
+    print(f"0.96 {cnt1} {r1} {mse}")
+    print(f"0.98 {cnt2} {r2} {mse}")
+    print(f"0.99 {cnt3} {r3} {mse}")
+    print(f"1.00 {cnt4} {r4} {mse}")
+    print(f"0.4 {cnt5} {r5} {mse}")
+
 
     save_outputs(fs, z, comparison_path, gif_path, num_frames=240)
